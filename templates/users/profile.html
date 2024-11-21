@@ -1,0 +1,37 @@
+{% extends 'users/base.html' %}
+
+{% block title%}
+Profile
+{% endblock%}
+
+{% block content %}
+
+<div class="container mx-auto py-8  w-2/3">
+    <h1 class="text-3xl font-bold text-center mb-8">My Profile</h1>
+    <!-- User Info -->
+    <div class="bg-white shadow-md rounded-md p-6 mt-4">
+        <h2 class="text-xl font-semibold mb-4">User Information  <a href="#" class="text-blue-600 font-semibold mt-2 ml-5 inline-block">edit</a></h2>
+        <p><strong>Username:</strong> {{ user.username }} </p>
+        <p><strong>Password:</strong> ******** </p>
+        <p><strong>Date Joined:</strong> {{ user.date_joined|date:"d M Y" }} </p>
+        
+    </div>
+    <h1 class="p-6 bg-gray-400 "> <a href="{% url 'add_blog' %}" type="submit" class="button text-white border-2 rounded p-2 bg-sky-500/100 ">Upload new blog</a></h1>
+    <div class="space-y-8">
+        <!-- Blog 1 -->
+         {%  for blog in blogs  %}
+        <div class="flex items-start bg-white p-4 rounded-lg shadow-md">
+            <img  src="{{ blog.image.url }}" alt="Blog Image" class="w-24 h-24 object-cover rounded-md">
+            <div class="ml-4">
+                <h2 class="text-xl font-bold text-gray-800">{{blog.title}}</h2>
+                <p class="text-sm text-gray-500">Published:  {{blog.created_at}} --- Last Updated:{{blog.updated_at}}</p>
+                <p class="text-gray-600 mt-2">{{blog.content | truncatewords:20}}</p>
+                <a href="{% url 'get_blog' blog.id %}" class="text-green-600 font-semibold mt-2 inline-block">Read more →</a>
+                <a href="{% url 'update' blog.id %}" class="text-yellow-600 font-semibold mt-2 ml-5   inline-block" >Edit</a>
+                <a href="{% url 'delete' blog.id %}" class="text-red-600 font-semibold mt-2 ml-5 inline-block">Delete</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'blogs/base.html' %}
+
+{% block title %} {{ blog.title }} {% endblock %}
+
+{% block content %}
+
+<div class="container mx-auto pr-10 pl-10 w-2/3" >
+    <h1 class="text-3xl font-bold mb-4">{{ blog.title }}</h1>
+
+    <img src="{{ blog.image.url }}" class="w-full object-cover rounded-lg mb-10 border border-2 border-black shadow-2xl" alt="{{ blog.title }}">
+
+    <p class="text-gray-700 leading-relaxed">{{ blog.content }}</p>
+
+    <div class="text-sm text-gray-500 mt-4">
+        Posted on {{ blog.created_at }} by {{ blog.user }}
+    </div>
+
+    <a href="/blog" class="inline-block mt-6 text-blue-500 hover:underline">Back to Blogs</a>
+</div>
+
+{% endblock %}

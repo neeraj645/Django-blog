@@ -1,0 +1,54 @@
+{% extends 'blogs/base.html' %}
+
+{% block content %}
+
+<form action="" method="post" enctype="multipart/form-data" class="container mx-auto pr-10 pl-10 w-2/3 bg-gray-200 p-8">
+    {% csrf_token %}
+    <h1 class="text-3xl font-bold text-center mb-8">Update Blog</h1>
+
+    <!-- Title Input -->
+    <div class="flex items-center justify-between space-x-4">
+        <div class="w-2/3">
+            <label for="title" class="block text-gray-700 font-medium text-lg">Title:</label>
+            <input type="text" value="{{ blog.title }}" name="title" id="title" 
+                   class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+        </div>
+
+        <!-- Category Dropdown -->
+        <div class="w-1/4">
+            <label for="category" class="block text-gray-700 font-medium text-lg">Category:</label>
+            <select name="category" id="category" 
+            class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+            {% for cat in categories %}
+            <option value="{{ cat.id }}" {% if cat.id == blog.category.id %}selected{% endif %}>
+                {{ cat.category_name }}
+            </option>
+            {% endfor %}
+        </select>
+        
+         
+        </div>
+    </div>
+
+    <!-- Content Input -->
+    <div>
+        <label for="content" class="block text-gray-700 font-medium text-lg mt-4">Content:</label>
+        <textarea name="content" id="content" rows="5" 
+                  class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>{{ blog.content }}</textarea>
+    </div>
+
+    <!-- Image Upload -->
+    <div>
+        <label for="image" class="block text-gray-700 font-medium text-lg mt-4">Image:</label>
+        <input type="file" name="image" id="image" accept="image/*" 
+               class="mt-2 block w-full text-sm text-gray-700 border border-gray-300 rounded-md cursor-pointer focus:outline-none">
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" 
+            class="w-full bg-blue-500 text-white py-3 px-4 rounded-md hover:bg-blue-600 transition text-lg mt-6">
+        Submit
+    </button>
+</form>
+
+{% endblock %}

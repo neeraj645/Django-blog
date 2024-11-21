@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogging Platform | {% block title %} {% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            font-family: "Montserrat", sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+
+    <nav class="bg-gray-800 text-white p-4 mb-6 relative">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Menu Icon and Title -->
+            <div class="flex items-center space-x-2">
+                {% if user.is_authenticated %}
+                <button id="menuButton" class="focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+                {% endif %}
+                <a href="{% url 'blog_list' %}">
+                    <h1 class="text-xl font-bold">Blogging Platform</h1>
+                </a>
+            </div>
+    
+            {% if user.is_authenticated %}
+            <!-- Search Bar -->
+            <form method="get" action="{% url 'blog_list_search' %}" class="flex flex-grow justify-center">
+                <input type="text" id="searchInput" name="search" placeholder="Search blogs..."
+                    value="{{ query }}" class="w-full max-w-md px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500 text-gray-800">
+                <button type="submit"
+                    class="px-4 py-2 ml-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none">
+                    Search
+                </button>
+            </form>
+    
+            <!-- Profile and Logout -->
+            <div class="space-x-4">
+                <a href="{% url 'profile_page' %}" class="px-4 py-2 bg-gray-700 rounded-md hover:bg-gray-600">Profile</a>
+                <a href="{% url 'logout_view' %}" class="px-4 py-2 bg-red-500 rounded-md hover:bg-red-600">Logout</a>
+            </div>
+            {% else %}
+            <!-- Login and Signup -->
+            <div class="space-x-4">
+                <a href="{% url 'login_page' %}" class="px-4 py-2 bg-gray-700 rounded-md hover:bg-gray-600">Login</a>
+                <a href="{% url 'signup' %}" class="px-4 py-2 bg-blue-500 rounded-md hover:bg-blue-600">Signup</a>
+            </div>
+            {% endif %}
+        </div>
+    
+        {% if user.is_authenticated %}
+        <!-- Dropdown Menu -->
+        <div id="menuDropdown" class="hidden bg-gray-700 text-white mt-2 py-2 rounded-md shadow-md absolute z-50">
+            {% for cat in categories %}
+            <a href="{% url 'get_cat' cat.id %}" class="block px-4 py-2 hover:bg-gray-600">{{ cat.category_name }}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </nav>
+    
+
+    {% block content %}
+
+    {% endblock %}
+
+    {% if user.is_authenticated %}
+    <script>
+        // Check if elements exist before adding event listeners
+        const menuButton = document.getElementById('menuButton');
+        const menuDropdown = document.getElementById('menuDropdown');
+    
+        if (menuButton && menuDropdown) {
+            menuButton.addEventListener('click', () => {
+                menuDropdown.classList.toggle('hidden');
+            });
+        }
+    </script>
+    {% endif %}
+</body>
+
+</html>

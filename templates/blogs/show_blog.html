@@ -1,0 +1,28 @@
+{% extends 'blogs/base.html' %}
+
+
+{%block title %}Blogs {% endblock%}
+
+
+{% block content %}
+
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+	<!-- Blog Card 1 -->
+	{% for blog in blogs %}
+	<div class="bg-white p-4 rounded-md shadow-md transform hover:scale-105 transition-all duration-300">
+		<div class="text-sm text-gray-500">{{blog.created_at}} by {{blog.user}}</div>
+		<img src="{{ blog.image.url }}" class="w-9/12 object-cover rounded-lg border-2 p-2 k " alt="{{ blog.title }}">
+		<h2 class="text-lg font-semibold mb-2">{{blog.title}}</h2>
+		<p class="text-gray-600 mb-4">{{blog.content|truncatewords:20 }}</p>
+		
+		<a href="{% url 'get_blog' blog.id %}"> <button
+				class="bg-blue-500 text-white py-1 px-2 mt-2 rounded hover:bg-blue-600">Read More</button>
+		</a>
+
+	</div>
+	{% endfor %}
+
+
+</div>
+{% endblock%}
