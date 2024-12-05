@@ -8,3 +8,10 @@ urlpatterns = [
     path('profile/', profile_page, name='profile_page'),
 ]
 
+
+# urlpatterns = [
+#     path('signup/', signup, name="signup"),
+#     path('login/', login_page, name="login"),
+#     path('logout/', logout_view, name="logout"),
+#     path('profile/', profile_page, name="profile"),
+# ]

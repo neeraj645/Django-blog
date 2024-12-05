@@ -7,7 +7,7 @@ from django_blogs import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
      path('users/', include('users.urls')),  # Correct inclusion
-    path('blog/', include("blog.urls")),  # Correct inclusion
+    path('', include("blog.urls")),  # Correct inclusion
 ]
 
 if settings.DEBUG:  # Serve media files during development
